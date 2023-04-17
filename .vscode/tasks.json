@@ -1,0 +1,112 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+//        {
+//            "label": "CUDA Make",
+//            "command": "make dbg=1",
+//            "type": "shell",
+//            "args": [],
+//            "problemMatcher": [
+//                "$nvcc"
+//            ],
+//            "presentation": {
+//                "reveal": "always"
+//            },
+//            "group": "build"
+//        },
+        {
+            "type": "shell",
+            "label": "CUDA C/C++: BUILD active file",
+            "command": "nvcc",
+            "args": [
+                "-g",
+                "-G",
+                "-ccbin",
+                "g++",
+                "-m64",
+                "-gencode",
+                "arch=compute_52,code=sm_52",
+                "-gencode",
+                "arch=compute_60,code=sm_60",
+                "-gencode",
+                "arch=compute_61,code=sm_61",
+                "-gencode",
+                "arch=compute_70,code=sm_70",
+                "-gencode",
+                "arch=compute_75,code=sm_75",
+                "-gencode",
+                "arch=compute_80,code=sm_80",
+                "-gencode",
+                "arch=compute_86,code=sm_86",
+                "-gencode",
+                "arch=compute_89,code=sm_89",
+                "-gencode",
+                "arch=compute_90,code=sm_90",
+                "${file}",
+                "-I${workspaceFolder}/Common",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": ["$gcc"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "CUDA C/C++: RUN active file",
+            "type": "shell",
+            "command": "${fileDirname}/${fileBasenameNoExtension}",
+            "dependsOn": [
+                "CUDA C/C++: BUILD active file"
+            ],
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "CUDA C/C++: PROFILE active file",
+            "type": "shell",
+            "command": "/usr/local/cuda/bin/nvprof ${fileDirname}/${fileBasenameNoExtension}",
+            "dependsOn": [
+                "CUDA C/C++: BUILD active file"
+            ],
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "nsys profile (old GPUs)",
+            "type": "shell",
+            "command": "/opt/nvidia/nsight-systems/2023.2.1/bin/nsys",
+            "args": [
+                "profile",
+                "-f",
+                "true",
+                "-o",
+                "kernel_out",
+                "-t",
+                "cuda",
+                "--stats",
+                "true",
+                "kernel"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "NvidiaCompute (new GPUs)",
+            "type": "process",
+            "command": "/opt/nvidia/ncu",
+            "args": [
+                "-f",
+                "-o kernel",
+                "--details-all",
+                "--print-summary",
+                "per-kernel",
+                "--target-processes",
+                "all",
+                "kernel"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}
