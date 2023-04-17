@@ -21,14 +21,6 @@
                 "arch=compute_70,code=sm_70",
                 "-gencode",
                 "arch=compute_75,code=sm_75",
-                "-gencode",
-                "arch=compute_80,code=sm_80",
-                "-gencode",
-                "arch=compute_86,code=sm_86",
-                "-gencode",
-                "arch=compute_89,code=sm_89",
-                "-gencode",
-                "arch=compute_90,code=sm_90",
                 "${file}",
                 "-I${workspaceFolder}/Common",
                 "-o",
@@ -47,15 +39,6 @@
             "label": "CUDA C/C++: RUN active file",
             "type": "shell",
             "command": "${fileDirname}/${fileBasenameNoExtension}",
-            "dependsOn": [
-                "CUDA C/C++: BUILD active file"
-            ],
-            "problemMatcher": ["$gcc"]
-        },
-        {
-            "label": "CUDA C/C++: PROFILE active file",
-            "type": "shell",
-            "command": "/usr/local/cuda/bin/nvprof ${fileDirname}/${fileBasenameNoExtension}",
             "dependsOn": [
                 "CUDA C/C++: BUILD active file"
             ],
@@ -109,17 +92,9 @@
                 "--section",
                 "SchedulerStats",
                 "--section",
-                "SourceCounters",
-                "--section",
                 "SpeedOfLight",
                 "--section",
-                "SpeedOfLight_HierarchicalDoubleRooflineChart",
-                "--section",
-                "SpeedOfLight_HierarchicalHalfRooflineChart",
-                "--section",
                 "SpeedOfLight_HierarchicalSingleRooflineChart",
-                "--section",
-                "SpeedOfLight_HierarchicalTensorRooflineChart",
                 "--section",
                 "SpeedOfLight_RooflineChart",
                 "--section",
